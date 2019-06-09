@@ -25,6 +25,7 @@ class ProductDetail extends Component {
         open_modal:false,
         value:0,
         open_another_modal:false,
+        result:{},
     }
   }
 
@@ -51,7 +52,35 @@ class ProductDetail extends Component {
 
     goCartPress(){
         this.setState({open_another_modal:false})
+        this.props.navigation.navigate('ViewCart')
     }
+
+    handleAddtoCartPress(){
+        this.setState({open_modal:false,open_another_modal:true})
+        fetch("http://localhost:8000/api/v1/cart/add_to_cart/", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+   
+          },
+        body: JSON.stringify({
+            customer_id: '1',
+            product_id: this.state.dataSource.id,
+            extra_details:{'quantity':this.state.value}
+         }) 
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({result:responseJson.result})
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    }
+
+
     renderConfirModal(){
         return(
             <View>
@@ -126,7 +155,7 @@ class ProductDetail extends Component {
                     </View>
                     <View style={{backgroundColor:'#FFFFFF',alignItems:'center',paddingTop:20}}>
                     <TouchableHighlight underlayColor='#fff' style ={{justifyContent: 'center',flexDirection: 'row',backgroundColor: '#068481',width: width/4,height:30,padding: 5,}}
-                            onPress={() => {this.setState({open_modal:false,open_another_modal:true})}}>
+                            onPress={() => {this.handleAddtoCartPress()}}>
                             <Text style={{color:'white',fontSize:12}}>Add to cart</Text>
                         </TouchableHighlight>
                     </View>
@@ -140,6 +169,7 @@ class ProductDetail extends Component {
     render() {
         console.log('home_render')
         console.log(this.state.dataSource)
+        console.log(this.state.result)
         return (
             <View style={styles.container}>
             {this.state.loading ?

@@ -8,6 +8,7 @@ import HomeScreen from '../container/Home/home'
 import ProfileScreen from '../container/Profile/profile'
 import OtpScreen from '../container/Otp/Otp'
 import ProductDetail from '../container/ProductDetail/productdetail'
+import Cart from '../container/Cart/cart'
 
 
 
@@ -117,6 +118,9 @@ const StacksOverTabs = createStackNavigator({
     },
     Product:{
         screen: ProductDetail,
+    },
+    ViewCart:{
+        screen: Cart,
     }    
     },
     {
