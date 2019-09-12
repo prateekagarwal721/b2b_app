@@ -43,6 +43,29 @@ class Cart extends Component {
     .catch(error=>console.log(error)) //to catch the errors if any
     }
 
+    removeItemPress(id){
+        fetch("http://localhost:8000/api/v1/cart/remove_from_cart/", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+   
+          },
+        body: JSON.stringify({
+            customer_id: '1',
+            item_id: id,
+         }) 
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.setState({result:responseJson.result,loading:true})
+            this.getCartItem()
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+    }
 
 
   
@@ -93,7 +116,7 @@ class Cart extends Component {
                                             </View>
                                         </View>
                                         <View style={{flexDirection:'row',justifyContent:'flex-end',paddingTop:5,paddingBottom:5}}>
-                                            <TouchableHighlight>
+                                            <TouchableHighlight onPress={()=>{this.removeItemPress(item.id)}}>
                                                 <View style={{width:100,borderWidth:0.5,borderRadius:5,borderColor:'grey'}}>
                                                     <Text style={{padding:5,textAlign:'center',color:'black'}}>Remove</Text>
                                                 </View>
@@ -110,7 +133,11 @@ class Cart extends Component {
                             })}
                         </View>
                     :
-                    <View />
+                    <View style={{flex:1,height:height,justifyContent:'center',alignItems:'center',marginTop:10,paddingHorizontal:10,paddingVertical:5,backgroundColor:'transparent',borderRadius:100,}}>
+                        <View style={{alignItems:'center'}}>
+                            <Text style={{fontFamily:'Din Condensed',fontSize:width/8,color:'#FFFFFF'}}>Empty Cart</Text>
+                        </View>
+                    </View>
                 }
                 {this.state.dataSource.summary.length > 0 ?
                     <View style={{width:width,marginVertical:5,backgroundColor:'#FFFFFF',elevation:3,paddingHorizontal:10,paddingLeft:20,paddingRight:20}}>

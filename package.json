@@ -12,6 +12,7 @@
     "react-native": "0.59.8",
     "react-native-gesture-handler": "^1.2.1",
     "react-native-numeric-input": "^1.8.0",
+    "react-native-search-bar": "^3.4.2",
     "react-native-video": "^4.4.1",
     "react-navigation": "^3.11.0"
   },

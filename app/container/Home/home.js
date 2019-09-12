@@ -74,20 +74,22 @@ class HomeScreen extends Component {
                             <View style={{margin:10}}>
                                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                                     <Text style={{fontSize:20,fontWeight:'bold'}}>{res.name}</Text>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Category',{category_id:res.id})}}>
                                         <Text style={{color:'blue',textDecorationLine:'underline'}}>View all</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{flexDirection:'row',alignItems:'center',paddingLeft:5,paddingRight:5}}>
+                                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 {res.products.map((product,index)=>{
                                     return(
                                         <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Product',{product_id:product.id})}}>
                                             <View style={{flexDirection:'row',margin:5,height:width/2.5,width:width/2.5,borderWidth:1,borderColor:'grey'}}>
-                                                <View style={{flexDirection:'column'}}>
+                                                <View style={{flexDirection:'column',marginLeft:10}}>
                                                     <Image
                                                         style={{width:width/3,height:width/3}}
                                                         resizeMode={'center'}
-                                                        source={{uri:'http://localhost:8000'+product.picture}}
+                                                        source={require('@assets/images/logo.png')}
+                                                        // source={{uri:'http://localhost:8000'+product.picture}}
                                                         />
                                                     <Text style={{fontSize:16,textAlign:'center'}}>{product.name}</Text>
                                                 </View>
@@ -95,6 +97,7 @@ class HomeScreen extends Component {
                                         </TouchableOpacity>
                                     )
                                 })}
+                                </ScrollView>
                                 </View>
                             </View>
                         )

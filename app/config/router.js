@@ -9,6 +9,9 @@ import ProfileScreen from '../container/Profile/profile'
 import OtpScreen from '../container/Otp/Otp'
 import ProductDetail from '../container/ProductDetail/productdetail'
 import Cart from '../container/Cart/cart'
+import CategoryScreen from '../container/Category/category'
+import Order from '../container/Order/order'
+import SearchBar from 'react-native-search-bar'
 
 
 
@@ -16,7 +19,7 @@ const TabNav = createBottomTabNavigator({
     Home: {
         screen: HomeScreen,
         path: '/',
-        navigationOptions: ({navigation}) => ({
+        defaultNavigationOptions: ({navigation}) => ({
             title: 'Home',
             tabBarLabel: 'Home',
             headerLeft: <TouchableOpacity
@@ -25,11 +28,11 @@ const TabNav = createBottomTabNavigator({
                         <Text>menu</Text>
                             {/* <Icon style={{color:'#11137C'}} name="md-menu" /> */}
                         </TouchableOpacity>,
+            headerRight: <TouchableOpacity onPress={()=>{navigation.navigate('Cart')}}>
+                          <Text>Cart</Text>
+                        </TouchableOpacity>
           }),
         },
-    Settings : {
-        screen: SignupScreen,
-    },
 
     Profile: {
         screen: ProfileScreen,
@@ -38,16 +41,51 @@ const TabNav = createBottomTabNavigator({
     },
     {
         headerMode:'screen',
-        navigationOptions:({navigation})=>({
+        defaultNavigationOptions:({navigation})=>({
             headerLeft: <TouchableOpacity
                         onPress={() => {navigation.navigate('DrawerOpen')}}
                         style={{paddingLeft:10}}>
                         <Text>menu</Text>
                             {/* <Icon style={{color:'#11137C'}} name="md-menu" /> */}
                         </TouchableOpacity>,
+            headerTitle:  "Home",
+            headerRight: <TouchableOpacity onPress={()=>{navigation.navigate('Cart')}}>
+                            <Text>Cart</Text>
+                        </TouchableOpacity>
         }),
         initialRouteName:'Home',
         tabBarPosition: 'bottom',
+        animationEnabled: true,
+        swipeEnabled: true,
+        tabBarOptions:{
+        labelStyle:{
+            color:"#11137C",
+            fontSize:10,
+        },
+        tabStyle:{
+            padding:0,
+            height:50,
+        },
+        showLabel:true,
+        showIcon:true,
+        },
+  }
+);
+
+const OrderTabNav = createBottomTabNavigator({
+    Order: {
+        screen: Order,
+        path: '/',
+    },
+    Profile: {
+        screen: ProfileScreen,
+    },
+
+    },
+    {
+        headerMode:'screen',
+        initialRouteName:'Order',
+        tabBarPosition: 'top',
         animationEnabled: true,
         swipeEnabled: true,
         tabBarOptions:{
@@ -93,6 +131,12 @@ const DrawerNav = createDrawerNavigator({
                         <Text>Menu</Text>
                             {/* <Icon style={{color:'#11137C'}} name="md-menu" /> */}
                         </TouchableOpacity>,
+            headerTitle:  <SearchBar
+                            placeholder='Search'
+                                        />,
+            headerRight: <TouchableOpacity onPress={()=>{navigation.navigate('ViewCart')}} style={{paddingRight:20}}>
+                            <Text>Cart</Text>
+                        </TouchableOpacity>
         }),
         contentOptions:{
           labelStyle:{color:'#11137C',width:250},
@@ -121,7 +165,13 @@ const StacksOverTabs = createStackNavigator({
     },
     ViewCart:{
         screen: Cart,
-    }    
+    },
+    Category:{
+        screen: CategoryScreen
+    },
+    // OrderTab:{
+    //     screen: OrderTabNav,
+    // }    
     },
     {
         headerMode: 'screen',

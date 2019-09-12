@@ -185,7 +185,8 @@ class ProductDetail extends Component {
                 <Image
                     style={{width:width/2,height:width/2}}
                     resizeMode={'center'}
-                    source={{uri:'http://localhost:8000'+this.state.dataSource.picture}}
+                    source={require('@assets/images/logo.png')}
+                    // source={{uri:'http://localhost:8000'+this.state.dataSource.picture}}
                     />
                     <View style={{backgroundColor:'white',padding:10,borderWidth:2,borderColor:'#ccc'}}>
                         <Text style={{fontSize:18}}>{this.state.dataSource.name}</Text>
